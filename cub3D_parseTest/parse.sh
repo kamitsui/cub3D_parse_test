@@ -1,76 +1,78 @@
+echo COLOR_ER1.cub
 ./cub3D ./MAP/error/COLOR_ER1.cub
-echo
+echo COLOR_ER2.cub
 ./cub3D ./MAP/error/COLOR_ER2.cub
-echo
+echo COLOR_ER3.cub
 ./cub3D ./MAP/error/COLOR_ER3.cub
-echo
+echo COLOR_ER4.cub
 ./cub3D ./MAP/error/COLOR_ER4.cub
-echo
+echo COLOR_ER5.cub
 ./cub3D ./MAP/error/COLOR_ER5.cub
-echo
+echo C_OVER.cub
 ./cub3D ./MAP/error/C_OVER.cub
-echo
+echo C_less.cub
 ./cub3D ./MAP/error/C_less.cub
-echo
+echo EA_OVER.cub
 ./cub3D ./MAP/error/EA_OVER.cub
-echo
+echo EA_less.cub
 ./cub3D ./MAP/error/EA_less.cub
-echo
+echo EXTRA_ELEMENTS.cub
 ./cub3D ./MAP/error/EXTRA_ELEMENTS.cub
-echo
+echo EXTRA_ELEMENTS2.cub
 ./cub3D ./MAP/error/EXTRA_ELEMENTS2.cub
-echo
+echo EXTRA_ELEMENTS3.cub
 ./cub3D ./MAP/error/EXTRA_ELEMENTS3.cub
-echo
+echo EXTRA_ELEMENTS4.cub
 ./cub3D ./MAP/error/EXTRA_ELEMENTS4 copy.cub
-echo
+echo F_OVER.cub
 ./cub3D ./MAP/error/F_OVER.cub
-echo
+echo F_less.cub
 ./cub3D ./MAP/error/F_less.cub
-echo
+echo MAP_ELEMENT1.cub
 ./cub3D ./MAP/error/MAP_ELEMENT1.cub
-echo
+echo MAP_ELEMENT2.cub
 ./cub3D ./MAP/error/MAP_ELEMENT2.cub
-echo
+echo MAP_ELEMENT3.cub
 ./cub3D ./MAP/error/MAP_ELEMENT3.cub
-echo
+echo MAP_ELEMENT4.cub
 ./cub3D ./MAP/error/MAP_ELEMENT4.cub
-echo
+echo NO_OVER.cub
 ./cub3D ./MAP/error/NO_OVER.cub
-echo
+echo NO_PATH.cub
 ./cub3D ./MAP/error/NO_PATH.cub
-echo
+echo NO_SURROUNDED_WALL.cub
 ./cub3D ./MAP/error/NO_SURROUNDED_WALL.cub
-echo
-./cub3D ./MAP/error/NO_SURROUNDED_WALL10.cub
-echo
+echo NO_SURROUNDED_WALL2.cub
 ./cub3D ./MAP/error/NO_SURROUNDED_WALL2.cub
-echo
+echo NO_SURROUNDED_WALL3.cub
 ./cub3D ./MAP/error/NO_SURROUNDED_WALL3.cub
-echo
+echo NO_SURROUNDED_WALL4.cub
 ./cub3D ./MAP/error/NO_SURROUNDED_WALL4.cub
-echo
+echo NO_SURROUNDED_WALL5.cub
 ./cub3D ./MAP/error/NO_SURROUNDED_WALL5.cub
-echo
+echo NO_SURROUNDED_WALL6.cub
 ./cub3D ./MAP/error/NO_SURROUNDED_WALL6.cub
-echo
+echo NO_SURROUNDED_WALL7.cub
 ./cub3D ./MAP/error/NO_SURROUNDED_WALL7.cub
-echo
+echo NO_SURROUNDED_WALL8.cub
 ./cub3D ./MAP/error/NO_SURROUNDED_WALL8.cub
-echo
+echo NO_SURROUNDED_WALL9.cub
 ./cub3D ./MAP/error/NO_SURROUNDED_WALL9.cub
-echo
+echo NO_SURROUNDED_WALL10.cub
+./cub3D ./MAP/error/NO_SURROUNDED_WALL10.cub
+echo NO_OVER.cub
+./cub3D ./MAP/error/NO_OVER.cub
+echo NO_less.cub
 ./cub3D ./MAP/error/NO_less.cub
-echo
+echo SO_OVER.cub
 ./cub3D ./MAP/error/SO_OVER.cub
-echo
+echo SO_less.cub
 ./cub3D ./MAP/error/SO_less.cub
-echo
+echo WE_OVER.cub
 ./cub3D ./MAP/error/WE_OVER.cub
-echo
+echo WE_less.cub
 ./cub3D ./MAP/error/WE_less.cub
-echo
+echo Wrong_position.cub
 ./cub3D ./MAP/error/Wrong_position.cub
-echo
+echo player_wall_off.cub
 ./cub3D ./MAP/error/player_wall_off.cub
-
