@@ -1,78 +1,38 @@
-echo COLOR_ER1.cub
-./cub3D ./MAP/error/COLOR_ER1.cub
-echo COLOR_ER2.cub
-./cub3D ./MAP/error/COLOR_ER2.cub
-echo COLOR_ER3.cub
-./cub3D ./MAP/error/COLOR_ER3.cub
-echo COLOR_ER4.cub
-./cub3D ./MAP/error/COLOR_ER4.cub
-echo COLOR_ER5.cub
-./cub3D ./MAP/error/COLOR_ER5.cub
-echo C_OVER.cub
-./cub3D ./MAP/error/C_OVER.cub
-echo C_less.cub
-./cub3D ./MAP/error/C_less.cub
-echo EA_OVER.cub
-./cub3D ./MAP/error/EA_OVER.cub
-echo EA_less.cub
-./cub3D ./MAP/error/EA_less.cub
-echo EXTRA_ELEMENTS.cub
-./cub3D ./MAP/error/EXTRA_ELEMENTS.cub
-echo EXTRA_ELEMENTS2.cub
-./cub3D ./MAP/error/EXTRA_ELEMENTS2.cub
-echo EXTRA_ELEMENTS3.cub
-./cub3D ./MAP/error/EXTRA_ELEMENTS3.cub
-echo EXTRA_ELEMENTS4.cub
-./cub3D ./MAP/error/EXTRA_ELEMENTS4 copy.cub
-echo F_OVER.cub
-./cub3D ./MAP/error/F_OVER.cub
-echo F_less.cub
-./cub3D ./MAP/error/F_less.cub
-echo MAP_ELEMENT1.cub
-./cub3D ./MAP/error/MAP_ELEMENT1.cub
-echo MAP_ELEMENT2.cub
-./cub3D ./MAP/error/MAP_ELEMENT2.cub
-echo MAP_ELEMENT3.cub
-./cub3D ./MAP/error/MAP_ELEMENT3.cub
-echo MAP_ELEMENT4.cub
-./cub3D ./MAP/error/MAP_ELEMENT4.cub
-echo NO_OVER.cub
-./cub3D ./MAP/error/NO_OVER.cub
-echo NO_PATH.cub
-./cub3D ./MAP/error/NO_PATH.cub
-echo NO_SURROUNDED_WALL.cub
-./cub3D ./MAP/error/NO_SURROUNDED_WALL.cub
-echo NO_SURROUNDED_WALL2.cub
-./cub3D ./MAP/error/NO_SURROUNDED_WALL2.cub
-echo NO_SURROUNDED_WALL3.cub
-./cub3D ./MAP/error/NO_SURROUNDED_WALL3.cub
-echo NO_SURROUNDED_WALL4.cub
-./cub3D ./MAP/error/NO_SURROUNDED_WALL4.cub
-echo NO_SURROUNDED_WALL5.cub
-./cub3D ./MAP/error/NO_SURROUNDED_WALL5.cub
-echo NO_SURROUNDED_WALL6.cub
-./cub3D ./MAP/error/NO_SURROUNDED_WALL6.cub
-echo NO_SURROUNDED_WALL7.cub
-./cub3D ./MAP/error/NO_SURROUNDED_WALL7.cub
-echo NO_SURROUNDED_WALL8.cub
-./cub3D ./MAP/error/NO_SURROUNDED_WALL8.cub
-echo NO_SURROUNDED_WALL9.cub
-./cub3D ./MAP/error/NO_SURROUNDED_WALL9.cub
-echo NO_SURROUNDED_WALL10.cub
-./cub3D ./MAP/error/NO_SURROUNDED_WALL10.cub
-echo NO_OVER.cub
-./cub3D ./MAP/error/NO_OVER.cub
-echo NO_less.cub
-./cub3D ./MAP/error/NO_less.cub
-echo SO_OVER.cub
-./cub3D ./MAP/error/SO_OVER.cub
-echo SO_less.cub
-./cub3D ./MAP/error/SO_less.cub
-echo WE_OVER.cub
-./cub3D ./MAP/error/WE_OVER.cub
-echo WE_less.cub
-./cub3D ./MAP/error/WE_less.cub
-echo Wrong_position.cub
-./cub3D ./MAP/error/Wrong_position.cub
-echo player_wall_off.cub
-./cub3D ./MAP/error/player_wall_off.cub
+#!/bin/bash
+
+# Define colors for OK and KO messages
+GREEN="\033[0;32m"
+RED="\033[0;31m"
+NC="\033[0m" # No color
+
+# Create symbolic link to ../cub3D
+ln -sf ../cub3D ./cub3D
+
+# Directory containing test .cub files
+ERROR_MAP_DIR="MAP/error"
+
+# Check if the error map directory exists
+if [ ! -d "$ERROR_MAP_DIR" ]; then
+    echo "Error: Directory $ERROR_MAP_DIR does not exist."
+    exit 1
+fi
+
+# Loop through all .cub files in the error map directory
+for file in "$ERROR_MAP_DIR"/*.cub; do
+    # Check if there are no .cub files
+    if [ ! -e "$file" ]; then
+        echo "No .cub files found in $ERROR_MAP_DIR."
+        break
+    fi
+
+    ## Execute cub3D with the .cub file and capture output and exit status
+    output=$(./cub3D "$file" 2>&1)
+    exit_status=$?
+
+    # Check if the program exited with EXIT_FAILURE (status 1) and printed an error message
+    if [ $exit_status -eq 1 ] && [[ $output == *"Error"* ]]; then
+        echo -e "${GREEN}OK${NC} - $file"
+    else
+        echo -e "${RED}KO${NC} - $file"
+    fi
+done

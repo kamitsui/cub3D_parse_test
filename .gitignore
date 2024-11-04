@@ -1,0 +1,15 @@
+# Ignore everything by default
+*
+
+# Allow directories to be included so we can selectively whitelist files
+!*/
+
+# Whitelist important files
+!*.cub
+!*.sh
+!*.md
+!*.txt
+!*.xpm
+!.gitignore
+
+# Ignore specific directories
