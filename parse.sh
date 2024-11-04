@@ -5,6 +5,10 @@ GREEN="\033[0;32m"
 RED="\033[0;31m"
 NC="\033[0m" # No color
 
+# Trace file for logging KO results
+TRACE_FILE="trace.log"
+echo "Trace Log - $(date)" > "$TRACE_FILE"  # Initialize trace file with date
+
 # Create symbolic link to ../cub3D
 ln -sf ../cub3D ./cub3D
 
@@ -34,5 +38,13 @@ for file in "$ERROR_MAP_DIR"/*.cub; do
         echo -e "${GREEN}OK${NC} - $file"
     else
         echo -e "${RED}KO${NC} - $file"
+
+		# Log KO result to the trace file
+        echo "=== KO Result for $file ===" >> "$TRACE_FILE"
+        echo "Command: ./cub3D \"$file\"" >> "$TRACE_FILE"
+        echo "Exit Status: $exit_status" >> "$TRACE_FILE"
+        echo "Output:" >> "$TRACE_FILE"
+        echo "$output" >> "$TRACE_FILE"
+        echo "" >> "$TRACE_FILE"  # Add a blank line for readability
     fi
 done
