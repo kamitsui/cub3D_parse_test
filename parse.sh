@@ -5,7 +5,7 @@ GREEN="\033[0;32m"
 RED="\033[0;31m"
 NC="\033[0m" # No color
 
-# Trace file for logging KO results
+# Trace file for logging KO and OK results
 TRACE_FILE="trace.log"
 echo "Trace Log - $(date)" > "$TRACE_FILE"  # Initialize trace file with date
 
@@ -36,15 +36,16 @@ for file in "$ERROR_MAP_DIR"/*.cub; do
     # Check if the program exited with EXIT_FAILURE (status 1) and printed an error message
     if [ $exit_status -eq 1 ] && [[ $output == *"Error"* ]]; then
         echo -e "${GREEN}OK${NC} - $file"
+		# Log OK result to the trace file
+        echo "=== OK Result for $file ===" >> "$TRACE_FILE"
     else
         echo -e "${RED}KO${NC} - $file"
-
 		# Log KO result to the trace file
         echo "=== KO Result for $file ===" >> "$TRACE_FILE"
+    fi
         echo "Command: ./cub3D \"$file\"" >> "$TRACE_FILE"
         echo "Exit Status: $exit_status" >> "$TRACE_FILE"
         echo "Output:" >> "$TRACE_FILE"
         echo "$output" >> "$TRACE_FILE"
         echo "" >> "$TRACE_FILE"  # Add a blank line for readability
-    fi
 done
