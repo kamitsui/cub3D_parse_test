@@ -13,7 +13,7 @@ echo "Trace Log - $(date)" > "$TRACE_FILE"  # Initialize trace file with date
 ln -sf ../cub3D ./cub3D
 
 # Directory containing test .cub files
-ERROR_MAP_DIR="MAP/error"
+ERROR_MAP_DIR="MAP/error_kusano"
 
 # Check if the error map directory exists
 if [ ! -d "$ERROR_MAP_DIR" ]; then
