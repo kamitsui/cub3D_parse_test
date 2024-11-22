@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Create symbolic link to ../cub3D
+ln -sf ../cub3D ./cub3D
+
 # Check if cub3D executable is available
 if [ ! -f "cub3D" ]; then
     echo "Error: 'cub3D' executable not found in the current directory."
