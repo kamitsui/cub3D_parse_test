@@ -1,5 +1,5 @@
-NO ./TEXTURE/kita.xpm
-SO ./TEXTURE/minami.xpm
+NO ./textures/kita.xpm
+SO ./textures/minami.xpm
 
 F 85,107,47
 C 30,144,255
@@ -14,5 +14,5 @@ C 30,144,255
 10000000000000001
 11111111111111111
 
-WE ./TEXTURE/nishi.xpm
-EA ./TEXTURE/higashi.xpm
+WE ./textures/nishi.xpm
+EA ./textures/higashi.xpm

@@ -1,6 +1,6 @@
-NO ./TEXTURE/kita.xpm
-SO ./TEXTURE/minami.xpm
-EA ./TEXTURE/higashi.xpm
+NO ./textures/kita.xpm
+SO ./textures/minami.xpm
+EA ./textures/higashi.xpm
 
 F 85,107,47
 C 30,144,255

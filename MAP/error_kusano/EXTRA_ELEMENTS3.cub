@@ -1,7 +1,7 @@
-TA ./TEXTURE/tanaka.xpm
-SO ./TEXTURE/minami.xpm
-WE ./TEXTURE/nishi.xpm
-EA ./TEXTURE/higashi.xpm
+TA ./textures/tanaka.xpm
+SO ./textures/minami.xpm
+WE ./textures/nishi.xpm
+EA ./textures/higashi.xpm
 
 F 85,107,47
 C 30,144,255
