@@ -10,7 +10,7 @@ if [ ! -f "cub3D" ]; then
 fi
 
 # Set the target directory
-TARGET_DIR="MAP"
+TARGET_DIR="map"
 
 # Check if the map directory exists
 if [ ! -d "$TARGET_DIR" ]; then
