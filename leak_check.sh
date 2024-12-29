@@ -47,6 +47,7 @@ select_make_exection() {
 leak_check() {
 	local exit_status=0
 	for file in "$DIR_MAP"/*.cub; do
+		export DISPLAY=":0.0 $PROGRAM $file"
 	    echo "Testing with $file..." | tee -a "$TRACE_FILE"
 	
 	    # Run the program and capture outputs
