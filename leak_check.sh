@@ -6,7 +6,9 @@ RED="\033[0;31m"
 NC="\033[0m" # No color
 
 # Directories and files
-DIR_MAP="map/error_kamitsui"
+DIR_MAP1="map/error_kamitsui"
+DIR_MAP2="map/error_kamite"
+DIR_MAP3="map/error_kusano"
 DIR_TRACE="trace"
 PROGRAM="./cub3D"
 SANITIZER_FLAGS="-fsanitize=address,undefined"
@@ -45,8 +47,16 @@ select_make_exection() {
 
 # Loop through all .cub files
 leak_check() {
+	local dir_map=$1
+	echo "Checking files in directory: $dir_map" | tee -a "$TRACE_FILE"
 	local exit_status=0
-	for file in "$DIR_MAP"/*.cub; do
+
+	for file in "$dir_map"/*.cub; do
+		if [ ! -f "$file" ]; then
+            echo "No .cub files found in $dir_map" | tee -a "$TRACE_FILE"
+            continue
+        fi
+
 		export DISPLAY=":0.0 $PROGRAM $file"
 	    echo "Testing with $file..." | tee -a "$TRACE_FILE"
 	
@@ -64,4 +74,6 @@ leak_check() {
 }
 
 select_make_exection
-leak_check
+leak_check "$DIR_MAP1"
+leak_check "$DIR_MAP2"
+leak_check "$DIR_MAP3"
