@@ -57,7 +57,6 @@ leak_check() {
             continue
         fi
 
-		export DISPLAY=":0.0 $PROGRAM $file"
 	    echo "Testing with $file..." | tee -a "$TRACE_FILE"
 	
 	    # Run the program and capture outputs
