@@ -2,10 +2,10 @@
 
 
 
-NO ./TEXTURE/kita.xpm
-SO ./TEXTURE/minami.xpm
-WE ./TEXTURE/nishi.xpm
-EA ./TEXTURE/higashi.xpma
+NO ./textures/kita.xpm
+SO ./textures/minami.xpm
+WE ./textures/nishi.xpm
+EA ./textures/higashi.xpma
 
 
 C 12,152,1          
