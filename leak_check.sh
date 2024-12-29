@@ -1,11 +1,25 @@
 #!/bin/bash
 
+# Define colors for OK and KO messages
+GREEN="\033[0;32m"
+RED="\033[0;31m"
+NC="\033[0m" # No color
+
 # Directories and files
-MAP_DIR="map/error_kamitsui"
-TRACE_DIR="trace"
+DIR_MAP="map/error_kamitsui"
+DIR_TRACE="trace"
 PROGRAM="./cub3D"
 SANITIZER_FLAGS="-fsanitize=address,undefined"
-TRACE_FILE="test_results.log"
+TRACE_FILE="$DIR_TRACE/kamitsui.log"
+DIR_PROJECT=".."
+
+# Create trace directory
+if [ ! -d "$DIR_TRACE" ]; then
+	mkdir $DIR_TRACE
+fi
+
+# Create symbolic link to ../cub3D
+ln -sf $DIR_PROJECT/cub3D ./cub3D
 
 # Clear previous logs
 > "$TRACE_FILE"
@@ -18,8 +32,7 @@ select_make_exection() {
 	if [ "$user_input" == "y" ]; then
 	    # Compile with sanitizers
 	    echo "Compiling with sanitizer flags..."
-	    make clean
-	    CFLAGS="$SANITIZER_FLAGS" make
+		make check -C $DIR_PROJECT
 	
 	    if [ $? -ne 0 ]; then
 	        echo "Compilation failed. Exiting."
@@ -33,7 +46,7 @@ select_make_exection() {
 # Loop through all .cub files
 leak_check() {
 	local exit_status=0
-	for file in "$MAP_DIR"/*.cub; do
+	for file in "$DIR_MAP"/*.cub; do
 	    echo "Testing with $file..." | tee -a "$TRACE_FILE"
 	
 	    # Run the program and capture outputs
@@ -41,9 +54,9 @@ leak_check() {
 		exit_status=$?
 	    echo "Exit Status = $exit_status" | tee -a "$TRACE_FILE"
 	    if [ $exit_status -eq 0 ]; then
-	        echo "Test Passed for $file" | tee -a "$TRACE_FILE"
+	        echo -e "Test ${GREEN}Passed${NC} for $file" | tee -a "$TRACE_FILE"
 	    else
-	        echo "Test Failed for $file" | tee -a "$TRACE_FILE"
+	        echo -e "Test ${RED}Failed${NC} for $file" | tee -a "$TRACE_FILE"
 	    fi
 	    echo "------------------------------------" >> "$TRACE_FILE"
 	done

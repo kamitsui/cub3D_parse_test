@@ -8,7 +8,7 @@ NC="\033[0m" # No color
 # Define directories and trace files
 DIR1="map/error_kusano"
 DIR2="map/error_kamite"
-DIR_TRACE="TRACE"
+DIR_TRACE="trace"
 TRACE1="$DIR_TRACE/kusano.log"
 TRACE2="$DIR_TRACE/kamite.log"
 
