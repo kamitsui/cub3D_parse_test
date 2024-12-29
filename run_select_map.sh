@@ -66,7 +66,7 @@ select_file_or_directory() {
             echo "Selected file: $selected"
             echo
             echo "Running: ./cub3D \"$selected\""
-            ./cub3D "$selected"
+            valgrind --leak-check=full ./cub3D "$selected"
             return 0
         else
             echo "Invalid selection. Please try again."
