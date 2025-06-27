@@ -6,9 +6,12 @@ RED="\033[0;31m"
 NC="\033[0m" # No color
 
 # Directories and files
+TARGET_DIR="map"
 DIR_MAP1="map/error_kamitsui"
 DIR_MAP2="map/error_kamite"
 DIR_MAP3="map/error_kusano"
+DIR_MAP4="map/OK_kamite"
+DIR_MAP5="map/OK_kusano"
 DIR_TRACE="trace"
 PROGRAM="./cub3D"
 SANITIZER_FLAGS="-fsanitize=address,undefined"
@@ -45,34 +48,104 @@ select_make_exection() {
 	fi
 }
 
+run_valgrind_and_trace() {
+	local file=$1
+
+	# Run the program and capture outputs
+	valgrind --leak-check=full --error-exitcode=2 "$PROGRAM" "$file" >> "$TRACE_FILE" 2>&1
+	local exit_status=$?
+	if [ $exit_status -ne 2 ]; then
+		echo -en "${GREEN}OK${NC} - $file\t" | tee -a "$TRACE_FILE"
+	else
+		echo -en "${RED}KO${NC} - $file\t" | tee -a "$TRACE_FILE"
+	fi
+	echo "Exit($exit_status)" | tee -a "$TRACE_FILE"
+	return $exit_status
+}
+
 # Loop through all .cub files
-leak_check() {
+leak_check_in_dir() {
 	local dir_map=$1
+	local exit_status
 	echo "Checking files in directory: $dir_map" | tee -a "$TRACE_FILE"
-	local exit_status=0
+	echo "--------- $dir_map -----------------" | tee -a "$TRACE_FILE"
 
 	for file in "$dir_map"/*.cub; do
 		if [ ! -f "$file" ]; then
-            echo "No .cub files found in $dir_map" | tee -a "$TRACE_FILE"
-            continue
-        fi
+		echo "No .cub files found in $dir_map" | tee -a "$TRACE_FILE"
+		continue
+	fi
+		echo "Testing with $file..." >> $TRACE_FILE
 
-	    echo "Testing with $file..." | tee -a "$TRACE_FILE"
-	
-	    # Run the program and capture outputs
-	    valgrind --leak-check=full --error-exitcode=1 "$PROGRAM" "$file" >> "$TRACE_FILE" 2>&1
+		run_valgrind_and_trace $file
 		exit_status=$?
-	    echo "Exit Status = $exit_status" | tee -a "$TRACE_FILE"
-	    if [ $exit_status -eq 0 ]; then
-	        echo -e "Test ${GREEN}Passed${NC} for $file" | tee -a "$TRACE_FILE"
-	    else
-	        echo -e "Test ${RED}Failed${NC} for $file" | tee -a "$TRACE_FILE"
-	    fi
-	    echo "------------------------------------" >> "$TRACE_FILE"
+		# Run the program and capture outputs
+#		valgrind --leak-check=full --error-exitcode=2 "$PROGRAM" "$file" >> "$TRACE_FILE" 2>&1
+#		exit_status=$?
+#		if [ $exit_status -ne 2 ]; then
+#			echo -en "${GREEN}OK${NC} - $file\t" | tee -a "$TRACE_FILE"
+#		else
+#			echo -en "${RED}KO${NC} - $file\t" | tee -a "$TRACE_FILE"
+#		fi
+#		echo "Exit($exit_status)" | tee -a "$TRACE_FILE"
+		echo "------------------------------------" >> "$TRACE_FILE"
+	done
+	return $exit_status
+}
+
+select_directory() {
+	local dir="$1"
+
+	while true; do
+		# List directories
+		echo "Contents of $dir:"
+		local items=()
+		local count=0
+		for item in "$dir"/*; do
+		    if [ -d "$item" ] || [[ "$item" == *.cub ]]; then
+		        items+=("$item")
+		        echo "[$count] $(basename "$item")"
+		        count=$((count + 1))
+		    fi
+		done
+
+		# If no items are found
+		if [ ${#items[@]} -eq 0 ]; then
+		    echo "No subdirectories or .cub files found in $dir."
+		    return 1
+		fi
+
+		# Prompt user to select an item
+		echo -n "Enter the number of your choice (or 'a' to all, or 'q' to quit): "
+		read -r choice
+
+		if [[ "$choice" == "q" ]]; then
+		    echo "Exiting."
+		    return 1
+		fi
+
+		# Validate input
+		if ! [[ "$choice" =~ ^[0-9]+$ ]] || [ "$choice" -lt 0 ] || [ "$choice" -ge "${#items[@]}" ]; then
+		    echo "Invalid choice. Please try again."
+		    continue
+		fi
+
+		local selected="${items[$choice]}"
+
+		# If the selection is a directory, navigate into it
+		if [ -d "$selected" ]; then
+			leak_check_in_dir "$selected"
+		    return $? # Propagate the result of the recursive call
+		elif [[ "$selected" == *.cub ]]; then
+
+		    echo "Testing with $selected..." >> $
+			run_valgrind_and_trace $selected
+		    return $?
+		else
+		    echo "Invalid selection. Please try again."
+		fi
 	done
 }
 
 select_make_exection
-leak_check "$DIR_MAP1"
-leak_check "$DIR_MAP2"
-leak_check "$DIR_MAP3"
+select_directory $TARGET_DIR
